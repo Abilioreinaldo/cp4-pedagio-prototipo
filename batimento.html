@@ -16,7 +16,7 @@
 
 <main>
   <div class="row">
-    <section class="card pad stack g22" style="width:400px;flex-shrink:0" aria-label="Viagem">
+    <section class="card pad stack g22" style="width:380px;flex-shrink:0" aria-label="Viagem">
       <a href="index.html" style="font-size:14px;font-weight:500;text-decoration:none">← Viagens</a>
       <div class="stack g4"><span class="eyebrow">Viagem VG-0001 · realizada</span><h1 style="font-size:26px">Tatuí → Cubatão → Tatuí</h1></div>
       <div class="stack g4">
@@ -40,22 +40,29 @@
           </div>
         </div>
       </div>
-      <p class="note">Estimativa congelada em 29/09/2026 09:10. Praças e tarifas ilustrativas.</p>
+      <p class="note">Estimativa congelada em 29/09/2026 09:10. Praças, pórtico e tarifas ilustrativos.</p>
     </section>
 
     <section class="stack g20" style="flex-grow:1;min-width:0" aria-label="Estimado versus realizado">
-      <div class="kpis">
+      <div class="kpis k5">
         <div class="kpi"><span class="l">Previsto</span><span class="v num" data-b="kPrev"></span></div>
         <div class="kpi"><span class="l">Realizado (tag)</span><span class="v num" data-b="kReal"></span></div>
-        <div class="kpi" id="diffTile"><span class="l">Diferença</span><span class="v num" data-b="kDiff"></span></div>
-        <div class="kpi"><span class="l">Economia da volta vazia</span><span class="v num" style="color:var(--brand)" data-b="kEco"></span></div>
+        <div class="kpi" id="diffTile"><span class="l">Diferença batida</span><span class="v num" data-b="kDiff"></span></div>
+        <div class="kpi" id="ffTile"><span class="l">Free flow pendente</span><span class="v num" data-b="kFF"></span></div>
+        <div class="kpi"><span class="l">Economia volta vazia</span><span class="v num" style="color:var(--brand)" data-b="kEco"></span></div>
       </div>
 
-      <div class="strip">
-        <span class="lab" id="cen-l">Cenário de demonstração — MDF-e na volta:</span>
+      <div class="strip" style="flex-wrap:wrap;row-gap:10px">
+        <span class="lab">Cenário de demonstração —</span>
+        <span class="lab" id="cen-l">MDF-e na volta:</span>
         <div role="group" aria-labelledby="cen-l" style="display:flex;gap:6px">
           <button class="seg cen" data-a="1">Esquecido em aberto</button>
-          <button class="seg cen" data-a="0">Encerrado em Cubatão</button>
+          <button class="seg cen" data-a="0">Encerrado</button>
+        </div>
+        <span class="lab" id="ff-l" style="margin-left:12px">Free flow na volta:</span>
+        <div role="group" aria-labelledby="ff-l" style="display:flex;gap:6px">
+          <button class="seg ffb" data-r="0">Sem registro na tag</button>
+          <button class="seg ffb" data-r="1">Registrado na tag</button>
         </div>
       </div>
 
@@ -64,16 +71,30 @@
       <div class="banner bad" id="bDiv" role="alert">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9A1C13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5"/><path d="M12 18h.01"/></svg>
         <div class="stack g6" style="flex-grow:1">
-          <span class="t">Volta vazia cobrada com 6 eixos em <span data-b="nDiv"></span> praças</span>
+          <span class="t">Volta vazia cobrada com 6 eixos em <span data-b="nDiv"></span> pontos</span>
           <span class="d">Esperado <span class="num" data-b="voltaEixos"></span> eixos cobráveis. Diferença de <b class="num" data-b="kDiff"></b>. Alerta enviado à fila da Central.</span>
         </div>
         <a class="btn btn-p" href="alerta.html">Ver alerta</a>
       </div>
+
+      <div class="banner warn" id="bFF" role="alert">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7A3E06" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div class="stack g6" style="flex-grow:1">
+          <span class="t"><span class="code" style="background:var(--warn-bg);color:var(--warn);margin-right:8px">FREE_FLOW_PENDENTE</span>Pórtico previsto sem registro na tag</span>
+          <span class="d">O veículo passou pelo Pórtico Free Flow 01 às 13:31 e a cobrança não entrou no extrato. Valor estimado de <b class="num" data-b="kFF"></b>, cobrado pela placa. Pague no prazo da concessionária para não virar multa por evasão.</span>
+        </div>
+        <button class="btn btn-p" id="pagar">Marcar como pago</button>
+      </div>
+      <div class="banner ok hide" id="bPago" role="status">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#05603A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
+        <div class="stack g4"><span class="t">Free flow pago</span><span class="d">Comprovante anexado à viagem. A pendência sai da fila.</span></div>
+      </div>
+
       <div class="banner ok hide" id="bOk" role="status">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#05603A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
         <div class="stack g4">
           <span class="t">Viagem conciliada</span>
-          <span class="d">Todas as praças batem com o previsto. A volta vazia economizou <b class="num" data-b="kEco"></b>.</span>
+          <span class="d">Todas as praças e pórticos batem com o previsto. A volta vazia economizou <b class="num" data-b="kEco"></b>.</span>
         </div>
       </div>
     </section>
@@ -82,48 +103,68 @@
 <script src="assets/data.js"></script>
 <script>
 (function () {
-  var st = { susp: 2, aberto: true };
-  var COLS = 'grid-template-columns:2.2fr 1fr .8fr 1fr .9fr 1fr 1fr 1.3fr';
-  var horasIda = ['06:12', '06:48', '07:35', '08:20'], horasVolta = ['13:05', '13:52', '14:40', '15:18'];
+  var st = { susp: 2, aberto: true, ffReg: false, pago: false };
+  var COLS = 'grid-template-columns:2.3fr 1fr .8fr 1fr .9fr 1fr 1fr 1.4fr';
+  var horasIda = ['06:12', '06:48', '07:35', '07:58', '08:20'], horasVolta = ['13:05', '13:31', '13:52', '14:40', '15:18'];
 
-  function mk(list, horas, eP, eC) {
-    var tp = 0, tr = 0, n = 0;
+  function mk(list, horas, eP, eC, ffMissing) {
+    var tp = 0, tr = 0, tpm = 0, n = 0, ffPend = 0;
     var html = list.map(function (p, i) {
-      var prev = p.t * eP, real = p.t * eC, d = real - prev, bad = d > 0.005;
+      var prev = p.t * eP, sub = p.rod + ' · ' + horas[i], name = '<span style="font-weight:500">' + p.nome + (p.ff ? FF_TAG : '') + '</span>';
+      tp += prev;
+      if (p.ff && ffMissing) {
+        ffPend = p.t * eC;
+        return '<div class="tr" style="' + COLS + ';background:#FFFCF5"><div class="stack g4">' + name + '<span class="sub">' + sub + ' · leitura por placa</span></div>' +
+          '<span class="num r">' + brl(p.t) + '</span><span class="num r">' + eP + '</span><span class="num r">' + brl(prev) + '</span>' +
+          '<span class="r grey">—</span><span class="r grey">—</span><span class="r grey">—</span>' +
+          '<span class="pill ' + (st.pago ? 'ok' : 'warn') + '">' + (st.pago ? 'Pago pela placa' : 'Sem registro na tag') + '</span></div>';
+      }
+      var real = p.t * eC, d = real - prev, bad = d > 0.005;
       if (bad) n++;
-      tp += prev; tr += real;
-      return '<div class="tr" style="' + COLS + '"><div class="stack g4"><span style="font-weight:500">' + p.nome + '</span><span class="sub">' + p.rod + ' · ' + horas[i] + '</span></div>' +
+      tpm += prev; tr += real;
+      if (p.ff) sub += ' · lançado em D+1';
+      return '<div class="tr" style="' + COLS + '"><div class="stack g4">' + name + '<span class="sub">' + sub + '</span></div>' +
         '<span class="num r">' + brl(p.t) + '</span><span class="num r">' + eP + '</span><span class="num r">' + brl(prev) + '</span>' +
         '<span class="num r' + (bad ? ' red' : '') + '">' + eC + '</span><span class="num r">' + brl(real) + '</span>' +
         '<span class="num r ' + (bad ? 'red' : 'grey') + '">' + sgn(d) + '</span>' +
         '<span class="pill ' + (bad ? 'bad' : 'ok') + '">' + (bad ? 'Cobrado a maior' : 'Conciliado') + '</span></div>';
     }).join('');
-    return { html: html, tp: tp, tr: tr, n: n };
+    return { html: html, tp: tp, tr: tr, tpm: tpm, n: n, ffPend: ffPend };
   }
   function legHtml(title, sub, r) {
     return '<div class="tbl"><div class="cap"><span class="t">' + title + '</span><span class="s">' + sub + '</span><span style="flex-grow:1"></span>' +
       '<span class="num s">Previsto ' + brl(r.tp) + ' · Realizado ' + brl(r.tr) + '</span></div>' +
-      '<div class="th" style="' + COLS + '"><span>Praça</span><span class="r">Tarifa/eixo</span><span class="r">Eixos prev.</span><span class="r">Previsto</span><span class="r">Eixos cobr.</span><span class="r">Realizado</span><span class="r">Diferença</span><span>Status</span></div>' +
+      '<div class="th" style="' + COLS + '"><span>Praça / pórtico</span><span class="r">Tarifa/eixo</span><span class="r">Eixos prev.</span><span class="r">Previsto</span><span class="r">Eixos cobr.</span><span class="r">Realizado</span><span class="r">Diferença</span><span>Status</span></div>' +
       r.html + '</div>';
   }
   function render() {
     var ve = 6 - st.susp, vc = st.aberto ? 6 : ve;
-    var ida = mk(PRACAS, horasIda, 6, 6), volta = mk(PRACAS.slice().reverse(), horasVolta, ve, vc);
-    var diff = (ida.tr + volta.tr) - (ida.tp + volta.tp), div = diff > 0.005;
+    var ida = mk(PRACAS, horasIda, 6, 6, false), volta = mk(PRACAS.slice().reverse(), horasVolta, ve, vc, !st.ffReg);
+    var diff = (ida.tr + volta.tr) - (ida.tpm + volta.tpm), div = diff > 0.005;
+    var ffOpen = !st.ffReg && !st.pago;
     var soma = PRACAS.reduce(function (a, p) { return a + p.t; }, 0);
-    var vals = { voltaEixos: ve, kPrev: brl(ida.tp + volta.tp), kReal: brl(ida.tr + volta.tr), kDiff: sgn(diff), kEco: brl(soma * st.susp), nDiv: ida.n + volta.n };
+    var vals = {
+      voltaEixos: ve, kPrev: brl(ida.tp + volta.tp), kReal: brl(ida.tr + volta.tr), kDiff: sgn(diff),
+      kFF: brl(ffOpen ? volta.ffPend : 0), kEco: brl(soma * st.susp), nDiv: ida.n + volta.n
+    };
     document.querySelectorAll('[data-b]').forEach(function (el) { el.textContent = vals[el.dataset.b]; });
     document.getElementById('legs').innerHTML =
       legHtml('Perna 1 · Tatuí → Cubatão', 'Carregado · 6 eixos', ida) +
       legHtml('Perna 2 · Cubatão → Tatuí', 'Vazio · ' + st.susp + ' suspensos · ' + ve + ' eixos cobráveis', volta);
     document.getElementById('diffTile').className = 'kpi ' + (div ? 'bad' : 'ok');
+    document.getElementById('ffTile').className = 'kpi ' + (ffOpen ? 'warn' : 'ok');
     document.getElementById('bDiv').classList.toggle('hide', !div);
-    document.getElementById('bOk').classList.toggle('hide', div);
+    document.getElementById('bFF').classList.toggle('hide', !ffOpen);
+    document.getElementById('bPago').classList.toggle('hide', !(st.pago && !st.ffReg));
+    document.getElementById('bOk').classList.toggle('hide', div || ffOpen);
     document.querySelectorAll('.susp').forEach(function (b) { b.setAttribute('aria-pressed', Number(b.dataset.n) === st.susp ? 'true' : 'false'); });
     document.querySelectorAll('.cen').forEach(function (b) { b.setAttribute('aria-pressed', (b.dataset.a === '1') === st.aberto ? 'true' : 'false'); });
+    document.querySelectorAll('.ffb').forEach(function (b) { b.setAttribute('aria-pressed', (b.dataset.r === '1') === st.ffReg ? 'true' : 'false'); });
   }
   document.querySelectorAll('.susp').forEach(function (b) { b.addEventListener('click', function () { st.susp = Number(b.dataset.n); render(); }); });
   document.querySelectorAll('.cen').forEach(function (b) { b.addEventListener('click', function () { st.aberto = b.dataset.a === '1'; render(); }); });
+  document.querySelectorAll('.ffb').forEach(function (b) { b.addEventListener('click', function () { st.ffReg = b.dataset.r === '1'; st.pago = false; render(); }); });
+  document.getElementById('pagar').addEventListener('click', function () { st.pago = true; render(); });
   render();
 })();
 </script>

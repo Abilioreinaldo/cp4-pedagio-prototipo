@@ -59,6 +59,9 @@ main{max-width:1440px;margin:0 auto;padding:32px 48px;display:flex;flex-directio
 .pill.bad{background:var(--bad-bg);color:var(--bad)}
 .pill.warn{background:var(--warn-bg);color:var(--warn)}
 .pill.info{background:var(--info-bg);color:var(--info)}
+.pill.ff{background:#E8EEF6;color:#1F3F6B;font-size:11px;padding:2px 8px}
+.banner.warn{border:1px solid var(--warn-line)}
+.kpis.k5{grid-template-columns:repeat(5,minmax(0,1fr))}
 .pill.load{background:#E1EFEA;color:#0A4F45;font-size:13px}
 .pill.empty{background:#F1EEE6;color:#5C4A1E;font-size:13px}
 .code{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:3px 8px;border-radius:6px;background:var(--bad-bg);color:var(--bad)}
