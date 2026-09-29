@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nova viagem · CP4</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="demo-bar">Protótipo navegável · dados, praças e tarifas de demonstração</div>
+<header class="hdr">
+  <div class="logo">CP4</div><div class="sep"></div>
+  <nav aria-label="Navegação"><span>Central de Inteligência</span><span>/</span><a href="index.html">Viagens</a><span>/</span><span class="cur">Nova viagem</span></nav>
+  <div class="sp"></div><span class="tenant">Transportadora: [TRANSPORTADORA]</span>
+</header>
+
+<main style="align-items:center">
+  <section class="card pad stack g22" style="width:880px" aria-label="Nova viagem">
+    <div class="stack g4"><span class="eyebrow">Passo 1 de 2 · declarar a viagem</span><h1 style="font-size:28px">Nova viagem</h1></div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+      <div class="field"><label for="veic">Veículo</label><input id="veic" readonly value="ABC-1D23 · Cavalo + carreta"><span style="font-size:13px;color:var(--muted)">6 eixos no total · 2 suspensíveis · tag Sem Parar</span></div>
+      <div class="field"><label for="data">Data de saída</label><input id="data" readonly value="29/09/2026 · 06:00"></div>
+    </div>
+
+    <div class="stack g12">
+      <span style="font-size:13px;font-weight:600;color:var(--muted)">Pernas da viagem</span>
+      <div style="display:grid;grid-template-columns:36px 1fr 1fr 1.4fr;gap:16px;align-items:end;padding:18px;border:1px solid var(--line);border-radius:12px">
+        <span class="badge" style="margin-bottom:9px">1</span>
+        <div class="field"><label for="o1">Origem</label><input id="o1" readonly value="Tatuí, SP" style="background:#fff"></div>
+        <div class="field"><label for="d1">Destino</label><input id="d1" readonly value="Cubatão, SP" style="background:#fff"></div>
+        <div class="field"><span class="lab">Situação</span><div style="display:flex;gap:6px"><button class="seg" aria-pressed="true">Carregado</button><button class="seg" aria-pressed="false">Vazio</button></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:36px 1fr 1fr 1.4fr;gap:16px;align-items:end;padding:18px;border:1px solid var(--line);border-radius:12px">
+        <span class="badge" style="margin-bottom:9px">2</span>
+        <div class="field"><label for="o2">Origem</label><input id="o2" readonly value="Cubatão, SP" style="background:#fff"></div>
+        <div class="field"><label for="d2">Destino</label><input id="d2" readonly value="Tatuí, SP" style="background:#fff"></div>
+        <div class="field"><span class="lab" id="susp-l">Situação · eixos suspensos</span>
+          <div style="display:flex;gap:6px" role="group" aria-labelledby="susp-l">
+            <button class="seg" aria-pressed="false">Carregado</button><button class="seg" aria-pressed="true">Vazio</button>
+            <button class="seg susp" data-n="0" aria-pressed="false" aria-label="0 eixos suspensos" style="min-width:44px">0</button>
+            <button class="seg susp" data-n="1" aria-pressed="false" aria-label="1 eixo suspenso" style="min-width:44px">1</button>
+            <button class="seg susp" data-n="2" aria-pressed="true" aria-label="2 eixos suspensos" style="min-width:44px">2</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn" style="align-self:flex-start;border-style:dashed;color:var(--brand);height:44px;font-size:14px">+ Adicionar perna</button>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--head);border-radius:10px;font-size:14px;color:#33483F">
+      <span>Eixos cobráveis: ida <b class="num">6</b> · volta <b class="num" id="volta">4</b></span>
+      <span style="color:#9FB3AC">|</span>
+      <span>A isenção dos suspensos só vale com o MDF-e encerrado antes da volta.</span>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:flex-end">
+      <a class="btn" href="index.html">Cancelar</a>
+      <a class="btn btn-p" href="estimativa.html">Calcular estimativa</a>
+    </div>
+  </section>
+</main>
+<script>
+document.querySelectorAll('.susp').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelectorAll('.susp').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    document.getElementById('volta').textContent = 6 - Number(b.dataset.n);
+  });
+});
+</script>
+</body>
+</html>

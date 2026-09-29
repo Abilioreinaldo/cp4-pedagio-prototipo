@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estimativa · CP4</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="demo-bar">Protótipo navegável · dados, praças e tarifas de demonstração</div>
+<header class="hdr">
+  <div class="logo">CP4</div><div class="sep"></div>
+  <nav aria-label="Navegação"><span>Central de Inteligência</span><span>/</span><a href="index.html">Viagens</a><span>/</span><span class="cur">Estimativa</span></nav>
+  <div class="sp"></div><span class="tenant">Transportadora: [TRANSPORTADORA]</span>
+</header>
+
+<main>
+  <div class="titlebar">
+    <div><span class="eyebrow">Passo 2 de 2 · estimativa congelada em 29/09/2026 09:10</span><h1>Tatuí → Cubatão → Tatuí · ABC-1D23</h1></div>
+    <a class="btn" href="nova-viagem.html">Editar viagem</a>
+    <a class="btn btn-p" href="index.html">Salvar como planejada</a>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><span class="l">Pedágio previsto</span><span class="v num">R$ 293,00</span></div>
+    <div class="kpi"><span class="l">Distância total</span><span class="v num">[KM] km</span></div>
+    <div class="kpi"><span class="l">Pedágio por km</span><span class="v num">R$ [X]/km</span></div>
+    <div class="kpi ok"><span class="l">Economia da volta vazia</span><span class="v num">R$ 58,60</span></div>
+  </div>
+
+  <div id="legs" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px"></div>
+
+  <div style="display:flex;gap:12px;align-items:center;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:14px;color:#33483F">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A5C50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+    <span>Depois da viagem, o extrato da tag é importado e cada praça é batida contra esta estimativa.</span>
+    <span style="flex-grow:1"></span>
+    <a href="importar.html" style="font-weight:600;white-space:nowrap">Importar extrato →</a>
+  </div>
+</main>
+<script src="assets/data.js"></script>
+<script>
+(function () {
+  function leg(title, sub, list, e) {
+    var tot = 0, rows = list.map(function (p) {
+      tot += p.t * e;
+      return '<div class="tr" style="grid-template-columns:2fr 1fr .7fr 1fr"><div class="stack g4"><span style="font-weight:500">' + p.nome + '</span><span class="sub">' + p.rod + '</span></div><span class="num r">' + brl(p.t) + '</span><span class="num r">' + e + '</span><span class="num r">' + brl(p.t * e) + '</span></div>';
+    }).join('');
+    return '<div class="tbl"><div class="cap" style="flex-direction:column;align-items:flex-start;gap:2px"><span class="t">' + title + '</span><span class="s">' + sub + '</span></div>' +
+      '<div class="th" style="grid-template-columns:2fr 1fr .7fr 1fr"><span>Praça</span><span class="r">Tarifa/eixo</span><span class="r">Eixos</span><span class="r">Previsto</span></div>' +
+      rows + '<div class="foot"><span>Subtotal</span><span class="num">' + brl(tot) + '</span></div></div>';
+  }
+  document.getElementById('legs').innerHTML =
+    leg('Perna 1 · Tatuí → Cubatão', 'Carregado · 6 eixos cobráveis', PRACAS, 6) +
+    leg('Perna 2 · Cubatão → Tatuí', 'Vazio · 2 suspensos · 4 eixos cobráveis', PRACAS.slice().reverse(), 4);
+})();
+</script>
+</body>
+</html>

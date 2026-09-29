@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alerta · volta cobrada cheia · CP4</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="demo-bar">Protótipo navegável · dados, praças e tarifas de demonstração</div>
+<header class="hdr">
+  <div class="logo">CP4</div><div class="sep"></div>
+  <nav aria-label="Navegação"><span>Central de Inteligência</span><span>/</span><a href="index.html">Viagens</a><span>/</span><a href="batimento.html">VG-0001</a><span>/</span><span class="cur">Alerta</span></nav>
+  <div class="sp"></div><span class="tenant">Transportadora: [TRANSPORTADORA]</span>
+</header>
+
+<main>
+  <div class="row">
+    <section class="stack g20" style="flex-grow:1" aria-label="Alerta">
+      <a href="batimento.html" style="font-size:14px;font-weight:500;text-decoration:none">← Batimento da VG-0001</a>
+      <div class="stack g8">
+        <div style="display:flex;gap:10px;align-items:center"><span class="code">VOLTA_VAZIA_COBRADA_CHEIA</span><span style="font-size:13px;color:var(--muted)">Aberto em 29/09/2026 15:30 · risco alto</span></div>
+        <h1>Volta vazia cobrada com 6 eixos</h1>
+        <p style="margin:0;font-size:16px;color:#33483F;max-width:760px;line-height:1.5">ABC-1D23 voltou de Cubatão declarado vazio, com 2 eixos suspensos. As 4 praças da volta cobraram 6 eixos em vez de 4.</p>
+      </div>
+
+      <div class="card stack g16" style="padding:22px;border-radius:14px">
+        <span class="display" style="font-size:17px">Por que o score é alto</span>
+        <div class="stack g12" style="font-size:15px;line-height:1.45">
+          <div style="display:flex;gap:12px"><span class="num red" style="min-width:56px">+40</span><span>Todas as praças da volta cobraram eixos acima do esperado, no mesmo padrão.</span></div>
+          <div style="display:flex;gap:12px"><span class="num red" style="min-width:56px">+30</span><span>Rodovias estaduais paulistas cobram os eixos suspensos quando o MDF-e está em aberto.</span></div>
+          <div style="display:flex;gap:12px"><span class="num red" style="min-width:56px">+15</span><span>Motorista já teve 2 voltas cobradas cheias em setembro.</span></div>
+          <div style="display:flex;gap:12px"><span class="num grey" style="min-width:56px;font-weight:600">−5</span><span>Ida conciliada sem divergência.</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;padding:14px 16px;background:var(--head);border-radius:10px">
+          <span style="font-size:14px;color:var(--muted)">Hipótese mais provável</span>
+          <span style="font-size:15px;font-weight:600">MDF-e não encerrado em Cubatão antes da volta</span>
+        </div>
+      </div>
+
+      <div class="tbl">
+        <div class="cap"><span class="t">Evidência — perna 2</span></div>
+        <div class="th" style="grid-template-columns:.7fr 2fr 1fr 1fr 1fr"><span>Hora</span><span>Praça</span><span class="r">Eixos esp. / cobr.</span><span class="r">Cobrado</span><span class="r">A maior</span></div>
+        <div class="tr" style="grid-template-columns:.7fr 2fr 1fr 1fr 1fr"><span class="num">13:05</span><span>Praça Anchieta · SP-150</span><span class="num r">4 / <span class="red">6</span></span><span class="num r">R$ 85,20</span><span class="num r red">+ R$ 28,40</span></div>
+        <div class="tr" style="grid-template-columns:.7fr 2fr 1fr 1fr 1fr"><span class="num">13:52</span><span>Praça Rodoanel Oeste · SP-021</span><span class="num r">4 / <span class="red">6</span></span><span class="num r">R$ 17,40</span><span class="num r red">+ R$ 5,80</span></div>
+        <div class="tr" style="grid-template-columns:.7fr 2fr 1fr 1fr 1fr"><span class="num">14:40</span><span>Praça Castello Branco II · SP-280</span><span class="num r">4 / <span class="red">6</span></span><span class="num r">R$ 34,80</span><span class="num r red">+ R$ 11,60</span></div>
+        <div class="tr" style="grid-template-columns:.7fr 2fr 1fr 1fr 1fr"><span class="num">15:18</span><span>Praça Castello Branco I · SP-280</span><span class="num r">4 / <span class="red">6</span></span><span class="num r">R$ 38,40</span><span class="num r red">+ R$ 12,80</span></div>
+        <div class="foot" style="font-size:15px"><span>Total a maior</span><span class="num red">+ R$ 58,60</span></div>
+      </div>
+    </section>
+
+    <aside class="card stack g16" style="width:380px;flex-shrink:0;padding:24px;margin-top:38px" aria-label="Tratamento">
+      <span class="display" style="font-size:18px">Tratamento</span>
+      <div id="pend" class="stack g12">
+        <span style="font-size:13px;font-weight:500;color:var(--muted)">Mensagem ao motorista</span>
+        <div style="padding:14px;border:1px solid var(--line);border-radius:10px;background:#F7FAF9;font-size:14px;line-height:1.5;color:#33483F">Na viagem de 29/09 (Cubatão → Tatuí) o MDF-e ficou em aberto e o pedágio cobrou os eixos suspensos. Encerre o MDF-e no destino antes de voltar vazio.</div>
+        <button class="btn btn-p" id="enviar">Orientar motorista</button>
+        <button class="btn">Gerar evidência em PDF</button>
+      </div>
+      <div id="done" class="stack g12 hide" role="status" style="padding:16px;border:1px solid var(--ok-line);border-radius:12px;background:#F2FAF6">
+        <div style="display:flex;gap:10px;align-items:center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#05603A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
+          <span style="font-weight:600">Orientação enviada</span>
+        </div>
+        <span style="font-size:14px;color:#33483F;line-height:1.5">O alerta segue aberto até a próxima volta vazia desse motorista ser conciliada.</span>
+        <a class="btn btn-p" href="index.html">Voltar para viagens</a>
+      </div>
+      <div style="height:1px;background:#E3EAE7"></div>
+      <div class="stack g6" style="font-size:13px;color:var(--muted)"><span>Responsável: Analista CP4</span><span>Visível para: Gestor da transportadora</span></div>
+    </aside>
+  </div>
+</main>
+<script>
+document.getElementById('enviar').addEventListener('click', function () {
+  document.getElementById('pend').classList.add('hide');
+  document.getElementById('done').classList.remove('hide');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importar extrato · CP4</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="demo-bar">Protótipo navegável · dados, praças e tarifas de demonstração</div>
+<header class="hdr">
+  <div class="logo">CP4</div><div class="sep"></div>
+  <nav aria-label="Navegação"><span>Central de Inteligência</span><span>/</span><a href="index.html">Viagens</a><span>/</span><span class="cur">Importar extrato</span></nav>
+  <div class="sp"></div><span class="tenant">Transportadora: [TRANSPORTADORA]</span>
+</header>
+
+<main>
+  <div class="row">
+    <section class="card pad stack g20" style="width:520px;flex-shrink:0" aria-label="Enviar extrato">
+      <h1 style="font-size:26px">Importar extrato da tag</h1>
+      <div class="stack g8">
+        <span class="eyebrow" id="op-l" style="letter-spacing:0;text-transform:none;font-size:13px;font-weight:500">Operadora</span>
+        <div role="group" aria-labelledby="op-l" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+          <button class="seg op" aria-pressed="true" data-f="extrato_semparar_set2026.csv">Sem Parar</button>
+          <button class="seg op" aria-pressed="false" data-f="extrato_veloe_set2026.xlsx">Veloe</button>
+          <button class="seg op" aria-pressed="false" data-f="extrato_conectcar_set2026.csv">ConectCar</button>
+          <button class="seg op" aria-pressed="false" data-f="extrato_movemais_set2026.csv">Move Mais</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:150px;border:2px dashed #B7C6C0;border-radius:12px;background:#F7FAF9;text-align:center">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A5C50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+        <span style="font-size:15px;font-weight:500">Arraste o CSV ou XLSX do extrato</span>
+        <span style="font-size:13px;color:var(--faint)">ou conecte a API da operadora</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F6A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/></svg>
+        <span class="num" id="arq" style="font-size:14px;flex-grow:1">extrato_semparar_set2026.csv</span>
+        <span class="pill ok">Processado</span>
+      </div>
+    </section>
+
+    <section class="stack g20" style="flex-grow:1" aria-label="Resultado da importação">
+      <div class="kpis">
+        <div class="kpi"><span class="l">Passagens lidas</span><span class="v num">38</span></div>
+        <div class="kpi"><span class="l">Vinculadas a viagens</span><span class="v num">34</span></div>
+        <div class="kpi"><span class="l">Sem viagem declarada</span><span class="v num">3</span></div>
+        <div class="kpi warn"><span class="l">Praça sem mapeamento</span><span class="v num">1</span></div>
+      </div>
+      <div class="tbl">
+        <div class="cap"><span class="t">Viagens batidas nesta importação</span></div>
+        <a class="tr hot" href="batimento.html" style="grid-template-columns:auto 1fr auto auto;border-top:0"><span class="num link-id">VG-0001</span><span>Tatuí → Cubatão → Tatuí · ABC-1D23</span><span class="num red">+ R$ 58,60</span><span class="pill bad">Volta cobrada cheia</span></a>
+        <div class="tr" style="grid-template-columns:auto 1fr auto auto"><span class="num" style="font-weight:500">VG-0005</span><span>Tatuí → Campinas → Tatuí · JKL-0M12</span><span class="num amber">+ R$ 12,80</span><span class="pill warn">Tarifa reajustada</span></div>
+        <div class="tr" style="grid-template-columns:auto 1fr auto auto"><span class="num" style="font-weight:500">VG-0002</span><span>Tatuí → Santos → Tatuí · DEF-4G56</span><span class="num grey">R$ 0,00</span><span class="pill ok">Conciliada</span></div>
+        <div class="tr" style="grid-template-columns:auto 1fr auto auto"><span class="num" style="font-weight:500">VG-0004</span><span>Sorocaba → Cubatão → Sorocaba · ABC-1D23</span><span class="num grey">R$ 0,00</span><span class="pill ok">Conciliada</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid var(--warn-line);border-radius:12px;font-size:14px;color:#33483F">
+        <span style="flex-grow:1">1 praça do extrato não foi reconhecida («PRC 07 KM 112 N»). Associe uma vez e o sistema lembra nas próximas importações.</span>
+        <button class="btn" style="height:44px;font-size:14px">Mapear praça</button>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+document.querySelectorAll('.op').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelectorAll('.op').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    document.getElementById('arq').textContent = b.dataset.f;
+  });
+});
+</script>
+</body>
+</html>

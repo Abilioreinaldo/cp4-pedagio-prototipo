@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viagens e pedágio · CP4</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="demo-bar">Protótipo navegável · dados, praças e tarifas de demonstração</div>
+<header class="hdr">
+  <div class="logo">CP4</div><div class="sep"></div>
+  <nav aria-label="Navegação"><span>Central de Inteligência</span><span>/</span><span>Pedágio</span><span>/</span><span class="cur">Viagens</span></nav>
+  <div class="sp"></div><span class="tenant">Transportadora: [TRANSPORTADORA]</span>
+</header>
+
+<main>
+  <div class="titlebar">
+    <div><span class="eyebrow">Setembro de 2026 · dados de demonstração</span><h1>Viagens e pedágio</h1></div>
+    <a class="btn" href="importar.html">Importar extrato da tag</a>
+    <a class="btn btn-p" href="nova-viagem.html">Nova viagem</a>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><span class="l">Previsto (viagens com extrato)</span><span class="v num">R$ 1.046,60</span></div>
+    <div class="kpi"><span class="l">Realizado (tag)</span><span class="v num">R$ 1.118,00</span></div>
+    <div class="kpi"><span class="l">Diferença</span><span class="v num red" style="font-weight:500">+ R$ 71,40</span></div>
+    <div class="kpi bad"><span class="l">Evitável ou recuperável</span><span class="v num">R$ 58,60</span></div>
+  </div>
+
+  <div class="tbl">
+    <div class="th" style="grid-template-columns:.8fr .7fr .9fr 2.2fr 1fr 1fr 1fr 1.3fr"><span>Viagem</span><span>Data</span><span>Placa</span><span>Rota</span><span class="r">Previsto</span><span class="r">Realizado</span><span class="r">Diferença</span><span>Status</span></div>
+    <a class="tr hot" href="batimento.html" style="grid-template-columns:.8fr .7fr .9fr 2.2fr 1fr 1fr 1fr 1.3fr"><span class="num link-id">VG-0001</span><span class="num">29/09</span><span class="num">ABC-1D23</span><span>Tatuí → Cubatão → Tatuí</span><span class="num r">R$ 293,00</span><span class="num r">R$ 351,60</span><span class="num r red">+ R$ 58,60</span><span class="pill bad">Volta cobrada cheia</span></a>
+    <a class="tr" href="estimativa.html" style="grid-template-columns:.8fr .7fr .9fr 2.2fr 1fr 1fr 1fr 1.3fr"><span class="num link-id">VG-0003</span><span class="num">29/09</span><span class="num">GHI-7J89</span><span>Tatuí → Paulínia</span><span class="num r">R$ 212,80</span><span class="r grey">aguardando</span><span class="r grey">—</span><span class="pill info">Planejada</span></a>
+    <div class="tr" style="grid-template-columns:.8fr .7fr .9fr 2.2fr 1fr 1fr 1fr 1.3fr"><span class="num" style="font-weight:500">VG-0002</span><span class="num">28/09</span><span class="num">DEF-4G56</span><span>Tatuí → Santos → Tatuí</span><span class="num r">R$ 301,40</span><span class="num r">R$ 301,40</span><span class="num r grey">R$ 0,00</span><span class="pill ok">Conciliada</span></div>
+    <div class="tr" style="grid-template-columns:.8fr .7fr .9fr 2.2fr 1fr 1fr 1fr 1.3fr"><span class="num" style="font-weight:500">VG-0004</span><span class="num">27/09</span><span class="num">ABC-1D23</span><span>Sorocaba → Cubatão → Sorocaba</span><span class="num r">R$ 268,20</span><span class="num r">R$ 268,20</span><span class="num r grey">R$ 0,00</span><span class="pill ok">Conciliada</span></div>
+    <div class="tr" style="grid-template-columns:.8fr .7fr .9fr 2.2fr 1fr 1fr 1fr 1.3fr"><span class="num" style="font-weight:500">VG-0005</span><span class="num">26/09</span><span class="num">JKL-0M12</span><span>Tatuí → Campinas → Tatuí</span><span class="num r">R$ 184,00</span><span class="num r">R$ 196,80</span><span class="num r amber">+ R$ 12,80</span><span class="pill warn">Tarifa reajustada</span></div>
+  </div>
+  <p class="note" style="font-size:13px">Clique em VG-0001 para ver o batimento ou em VG-0003 para ver uma estimativa aguardando extrato.</p>
+</main>
+</body>
+</html>
