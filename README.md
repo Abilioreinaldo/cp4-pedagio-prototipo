@@ -16,3 +16,7 @@ Protótipo do módulo de pedágio da Central de Inteligência Operacional da CP4
 ## Rodar
 
 HTML estático, sem build. Abra `index.html` ou publique com GitHub Pages (Settings › Pages › branch `main`, pasta raiz).
+
+## Área da transportadora
+
+`transportadora/index.html` — protótipo navegável da área logada da transportadora (Dashboard, Faturamento, Certificado Digital, Conta Corrente, Relatórios, Motoristas, Veículos e Usuários). Inclui o fluxo de pedido de abastecimento com geração de token. Dados de demonstração; nada é salvo.
