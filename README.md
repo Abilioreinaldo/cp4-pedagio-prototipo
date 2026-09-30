@@ -19,6 +19,6 @@ HTML estático, sem build. Abra `index.html` ou publique com GitHub Pages (Setti
 
 ## Área da transportadora
 
-`transportadora/index.html` — protótipo navegável da área logada da transportadora (Dashboard, Faturamento, Certificado Digital, Conta Corrente, Relatórios, Motoristas, Veículos e Usuários). Inclui o fluxo de pedido de abastecimento com geração de token. Dados de demonstração; nada é salvo.
+`transportadora/index.html` — protótipo navegável do painel real da transportadora: Dashboard, Faturamento, Certificado Digital, Conta Corrente, Relatórios, Motoristas, Veículos e Usuários. A transportadora não cria venda pelo painel: cada abastecimento é aprovado pelo motorista no posto, pelo WhatsApp. O painel acompanha, controla (limite de postos por veículo, usuários, sessões) e mostra o financeiro. Dados de demonstração; nada é salvo.
 
-Para mostrar o nome de uma transportadora específica na tela, acrescente `?empresa=` ao link, por exemplo `transportadora/?empresa=Transportes%20Silva%20Ltda`.
+Para mostrar o nome de uma transportadora específica, acrescente `?empresa=` ao link, por exemplo `transportadora/?empresa=Transportes%20Silva%20Ltda`.
