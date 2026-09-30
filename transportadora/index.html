@@ -212,10 +212,17 @@ function diaCurto(d){ return String(d.getDate()).padStart(2,'0') + '/' + String(
 function hora(d){ return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); }
 function addDias(d,n){ var x = new Date(d); x.setDate(x.getDate()+n); return x; }
 
+// Nome da empresa pode vir do link: .../transportadora/?empresa=Transportes%20Silva%20Ltda
+var NOME_EMP = 'Transportadora Modelo Ltda';
+try { var qe = new URLSearchParams(location.search).get('empresa'); if (qe && qe.trim()) NOME_EMP = qe.trim().slice(0, 60); } catch (_) {}
+var BASE_EMP = NOME_EMP.replace(/\s+(ltda\.?|s\/?a\.?|eireli|me|epp)$/i, '');
+var SIG_EMP = BASE_EMP.split(/\s+/).filter(function(w){ return w.length > 2 || /^[A-Z0-9]+$/.test(w); }).map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase() || 'TR';
+var DOMINIO = (BASE_EMP.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,30) || 'empresa') + '.com.br';
 var EMPRESAS = [
-  { sig:'TM', nome:'Transportadora Modelo Ltda', cnpj:'12.345.678/0001-90', limite:900000, usado:260476.10 },
-  { sig:'TM', nome:'Transportadora Modelo – Filial Sorocaba', cnpj:'12.345.678/0002-71', limite:250000, usado:61230.40 }
+  { sig:SIG_EMP, nome:NOME_EMP, cnpj:'12.345.678/0001-90', limite:900000, usado:260476.10 },
+  { sig:SIG_EMP, nome:BASE_EMP + ' – Filial Sorocaba', cnpj:'12.345.678/0002-71', limite:250000, usado:61230.40 }
 ];
+document.title = 'CP4 Logtech · ' + NOME_EMP;
 
 var LETRAS = 'ABCDEFGHJKLMNPRSTUVWXYZ';
 function placa(){ return pick(LETRAS)+pick(LETRAS)+pick(LETRAS)+Math.floor(rnd()*10)+pick(LETRAS)+Math.floor(rnd()*10)+Math.floor(rnd()*10); }
@@ -233,7 +240,7 @@ var NOMES = ['Carlos','João','Marcos','Paulo','Rafael','Anderson','Luiz','Edson
 var SOBRENOMES = ['Silva','Souza','Oliveira','Santos','Pereira','Lima','Ferreira','Costa','Rodrigues','Almeida','Nascimento','Carvalho','Gomes','Ribeiro','Martins','Barbosa','Rocha','Dias','Moreira','Teixeira'];
 var MOTORISTAS = [];
 for (var j = 0; j < 63; j++) {
-  var nm = pick(NOMES) + ' ' + pick(SOBRENOMES) + ' ' + pick(SOBRENOMES);
+  var s1 = pick(SOBRENOMES), s2 = pick(SOBRENOMES); while (s2 === s1) s2 = pick(SOBRENOMES); var nm = pick(NOMES) + ' ' + s1 + ' ' + s2;
   var cpf = String(100+Math.floor(rnd()*899)) + '.***.***-' + String(10+Math.floor(rnd()*89));
   MOTORISTAS.push({ nome:nm, cpf:cpf, cnh:pick(['E','E','E','D']), validade:dia(addDias(HOJE, Math.floor(rnd()*1400)-60)), tel:'(15) 9' + (1000+Math.floor(rnd()*8999)) + '-' + (1000+Math.floor(rnd()*8999)), status:'Disponível', veiculo:'' });
 }
@@ -286,11 +293,11 @@ var FATURAS = [
 FATURAS.forEach(function(f){ f.pedidos = 70 + Math.floor(rnd()*45); f.litros = Math.round(f.pedidos * (380 + rnd()*120)); f.valor = f.litros * 6.11; });
 
 var USUARIOS = [
-  {nome:'Renata Moreira', email:'renata@transportadoramodelo.com.br', perfil:'Administrador', status:'Ativo', acesso:'hoje, 14:02'},
-  {nome:'Eduardo Lima', email:'eduardo@transportadoramodelo.com.br', perfil:'Financeiro', status:'Ativo', acesso:'hoje, 09:41'},
-  {nome:'Camila Rocha', email:'camila@transportadoramodelo.com.br', perfil:'Operador de frota', status:'Ativo', acesso:'ontem, 18:15'},
-  {nome:'Bruno Teixeira', email:'bruno@transportadoramodelo.com.br', perfil:'Operador de frota', status:'Ativo', acesso:'28/09, 07:30'},
-  {nome:'Sônia Dias', email:'sonia@transportadoramodelo.com.br', perfil:'Financeiro', status:'Inativo', acesso:'02/08, 16:04'}
+  {nome:'Renata Moreira', email:'renata@' + DOMINIO, perfil:'Administrador', status:'Ativo', acesso:'hoje, 14:02'},
+  {nome:'Eduardo Lima', email:'eduardo@' + DOMINIO, perfil:'Financeiro', status:'Ativo', acesso:'hoje, 09:41'},
+  {nome:'Camila Rocha', email:'camila@' + DOMINIO, perfil:'Operador de frota', status:'Ativo', acesso:'ontem, 18:15'},
+  {nome:'Bruno Teixeira', email:'bruno@' + DOMINIO, perfil:'Operador de frota', status:'Ativo', acesso:'28/09, 07:30'},
+  {nome:'Sônia Dias', email:'sonia@' + DOMINIO, perfil:'Financeiro', status:'Inativo', acesso:'02/08, 16:04'}
 ];
 
 var EXTRATO = [
@@ -425,7 +432,7 @@ function serie(){
 function nice(max){ if (max <= 0) return 1; var p = Math.pow(10, Math.floor(Math.log10(max))); var f = max / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; }
 function eixoY(v,cur){ if (cur) return v >= 1000 ? (v/1000).toLocaleString('pt-BR') + ' mil' : n0(v); return v >= 1000 ? (v/1000).toLocaleString('pt-BR') + ' mil' : n0(v); }
 function grafico(dias, series, cur){
-  var W = 360, H = 210, L = 46, R = 10, T = 10, B = 34;
+  var W = 360, H = 210, L = 46, R = 18, T = 10, B = 34;
   var max = 0; series.forEach(function(s){ dias.forEach(function(x){ max = Math.max(max, x[s.k]); }); });
   var top = nice(max * 1.05), n = dias.length;
   var X = function(i){ return L + (n === 1 ? 0 : i * (W-L-R) / (n-1)); };
@@ -491,7 +498,7 @@ function telaCertificado(){
   var c = S.cert;
   return '<div class="titlebar"><h1>Certificado Digital</h1></div><p class="sub">O certificado A1 da empresa é usado para emitir e consultar os documentos fiscais dos abastecimentos.</p>' +
   '<div class="card pad" style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap"><div class="ico g" style="width:44px;height:44px">'+ic('shield',22)+'</div><div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="font-size:14px">Certificado A1 · e-CNPJ</b>'+pill(c.status)+'</div>' +
-  '<dl class="kv" style="max-width:420px"><dt>Titular</dt><dd>'+esc(emp().nome.toUpperCase())+'</dd><dt>CNPJ</dt><dd class="num">'+emp().cnpj+'</dd><dt>Emitido por</dt><dd>AC Certificadora Demonstração</dd><dt>Válido até</dt><dd class="num">'+c.validade+' <span class="muted">(165 dias)</span></dd>' + (c.envio ? '<dt>Novo arquivo</dt><dd>'+esc(c.envio)+'</dd>' : '') + '</dl></div></div>' +
+  '<dl class="kv" style="max-width:420px"><dt>Titular</dt><dd>'+esc(emp().nome.toUpperCase())+'</dd><dt>CNPJ</dt><dd class="num">'+emp().cnpj+'</dd><dt>Emitido por</dt><dd>AC Certificadora (exemplo)</dd><dt>Válido até</dt><dd class="num">'+c.validade+' <span class="muted">(165 dias)</span></dd>' + (c.envio ? '<dt>Novo arquivo</dt><dd>'+esc(c.envio)+'</dd>' : '') + '</dl></div></div>' +
   '<h2>Substituir certificado</h2>' +
   '<form class="card pad" id="form-cert" style="display:flex;flex-direction:column;gap:12px"><div class="fgrid"><div class="field"><label for="cert-arq">Arquivo do certificado (.pfx ou .p12)</label><input class="input" type="file" id="cert-arq" accept=".pfx,.p12"></div><div class="field"><label for="cert-senha">Senha do certificado</label><input class="input" type="password" id="cert-senha" placeholder="••••••••"></div></div><div class="err" id="cert-err" hidden></div><div><button class="btn pri" type="submit">Enviar certificado</button></div></form>';
 }
@@ -644,9 +651,9 @@ function render(){
 }
 function login(){
   return '<div class="login"><form id="form-login"><img src="logo.png" alt="CP4 Logtech" width="101" height="52"><h1>Entrar na CP4</h1><p class="sub" style="margin:0">Área da transportadora</p>' +
-  '<div class="field"><label for="lg-email">E-mail</label><input class="input" id="lg-email" type="email" value="renata@transportadoramodelo.com.br"></div>' +
+  '<div class="field"><label for="lg-email">E-mail</label><input class="input" id="lg-email" type="email" value="renata@'+esc(DOMINIO)+'"></div>' +
   '<div class="field"><label for="lg-senha">Senha</label><input class="input" id="lg-senha" type="password" value="demonstracao"></div>' +
-  '<button class="btn pri" type="submit" style="justify-content:center;padding:10px">Entrar</button><p class="muted" style="font-size:11px;margin:0">Protótipo: qualquer senha entra.</p></form></div>';
+  '<button class="btn pri" type="submit" style="justify-content:center;padding:10px">Entrar</button><p class="muted" style="font-size:11px;margin:0">Demonstração: clique em Entrar.</p></form></div>';
 }
 
 document.addEventListener('click', function(ev){
